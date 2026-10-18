@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>עלי אקספרס — קטלוג חי | דרופשיפינג</title>
+<meta name="description" content="קטלוג דרופשיפינג שמתעדכן אוטומטית מגיליון Google Sheets. מוצרים, לינקים שיתופיים ותמונות — בלחיצה אחת.">
+<meta name="theme-color" content="#07070c">
+<meta property="og:title" content="עלי אקספרס — קטלוג חי">
+<meta property="og:description" content="מוצרים, לינקים שיתופיים ותמונות — נטענים אוטומטית מהגיליון.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='28' fill='%23d8ff3e'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Arial,sans-serif' font-weight='900' text-anchor='middle' fill='%2307070c'%3Eע%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://docs.google.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;0,900;1,900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ===== PRELOADER ===== -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="pre-inner">
+    <div class="pre-logo">ע</div>
+    <div class="pre-num" id="preNum">0</div>
+    <div class="pre-bar"><span id="preBar"></span></div>
+    <div class="pre-word">CATALOG · LIVE SHEET</div>
+  </div>
+</div>
+
+<!-- ===== FX LAYERS ===== -->
+<div class="grain" aria-hidden="true"></div>
+<div class="orbs" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+<div class="scrollbar" id="scrollbar" aria-hidden="true"></div>
+
+<!-- ===== NAV ===== -->
+<header class="nav" id="nav">
+  <a class="brand" href="#top" data-magnet>
+    <span class="brand-mark">ע</span>
+    <span class="brand-txt"><b id="brandName">עלי אקספרס</b><i>LIVE CATALOG</i></span>
+  </a>
+  <nav class="nav-links" aria-label="תפריט ראשי">
+    <a href="#products">מוצרים</a>
+    <a href="#how">איך זה עובד</a>
+    <a href="#reviews">חוות דעת</a>
+    <a href="#faq">שאלות</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="chip-btn" id="refreshBtn" title="רענון הקטלוג מהגיליון">
+      <span class="spin-ico" aria-hidden="true">⟳</span><span>רענון</span>
+    </button>
+    <button class="cart-btn" id="cartBtn" aria-label="פתיחת סל">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 6h15l-1.5 9h-12zM6 6 5 3H2M9 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm9 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/></svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+    <button class="burger" id="burger" aria-label="תפריט" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+<div class="mnav" id="mnav" hidden>
+  <a href="#products">מוצרים</a><a href="#how">איך זה עובד</a><a href="#reviews">חוות דעת</a><a href="#faq">שאלות</a>
+</div>
+
+<main id="top">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow reveal"><i class="dot"></i> קטלוג חי · נטען אוטומטית מהגיליון</span>
+      <h1 class="hero-title">
+        <span class="ln reveal">המוצרים</span>
+        <span class="ln reveal">שרוצים <em>שתיקנו</em></span>
+        <span class="ln reveal">
+          <span class="rot" id="rot" aria-live="off"><span>היום.</span><span>בלחיצה.</span><span>במחיר שוק.</span><span>בלי לחפש.</span></span>
+        </span>
+      </h1>
+      <p class="hero-sub reveal">כל מוצר, כל לינק שיתופי וכל תמונה — נטענים אוטומטית מגיליון Google Sheets. מעדכנים שורה אחת, והחנות מתעדכנת בשנייה.</p>
+      <div class="hero-cta reveal">
+        <a class="btn btn-acid" href="#products" data-magnet>לכל המוצרים <span class="arr">↓</span></a>
+        <a class="btn btn-ghost" href="#how" data-magnet>איך זה עובד</a>
+      </div>
+      <div class="stats reveal" id="stats">
+        <div class="stat"><b data-count id="statProducts">0</b><span>מוצרים בקטלוג</span></div>
+        <div class="stat"><b data-count id="statCats">0</b><span>קטגוריות</span></div>
+        <div class="stat"><b data-count="100">0</b><span>% אוטומטי</span></div>
+        <div class="stat"><b data-count="1">0</b><span>קליק לקנייה</span></div>
+      </div>
+    </div>
+    <div class="hero-vis" id="heroVis" aria-hidden="true">
+      <div class="hv-card c1" data-float="1"><img alt="" id="hvImg1" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c4dff'/%3E%3Cstop offset='1' stop-color='%23ff2e93'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='400' fill='url(%23g)'/%3E%3C/svg%3E"></div>
+      <div class="hv-card c2" data-float="2"><img alt="" id="hvImg2" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='g2' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23d8ff3e'/%3E%3Cstop offset='1' stop-color='%233ef2ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='400' fill='url(%23g2)'/%3E%3C/svg%3E"></div>
+      <div class="hv-card c3" data-float="3"><img alt="" id="hvImg3" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='g3' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff7a1a'/%3E%3Cstop offset='1' stop-color='%23ff2e93'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='400' fill='url(%23g3)'/%3E%3C/svg%3E"></div>
+      <span class="sticker s1">משלוח<br>מהיר</span>
+      <span class="sticker s2">%70<br>הנחה</span>
+      <span class="sticker s3">מקורי<br>100%</span>
+    </div>
+  </section>
+
+  <!-- ===== TICKER ===== -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="tickerTrack">
+      <span>מוצרים שנבחרו ביד</span><i>✦</i><span>מחירים מטורפים</span><i>✦</i><span>עדכון חי מהגיליון</span><i>✦</i><span>קנייה בלחיצה אחת</span><i>✦</i><span>לינק שיתופי לכל מוצר</span><i>✦</i>
+    </div>
+  </div>
+
+  <!-- ===== SHOP ===== -->
+  <section class="shop" id="products">
+    <div class="sec-head">
+      <span class="eyebrow reveal"><i class="dot"></i> הקטלוג</span>
+      <h2 class="reveal">מה <em>יש</em> לנו היום</h2>
+      <p class="reveal">כל מה שרואים כאן מגיע ישירות מהגיליון. מוסיפים שורה — מוצר חדש מופיע.</p>
+    </div>
+
+    <div class="toolbar reveal" id="toolbar">
+      <label class="search">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="search" id="search" placeholder="חיפוש בקטלוג…" aria-label="חיפוש בקטלוג">
+      </label>
+      <div class="chips" id="chips" role="tablist" aria-label="קטגוריות"></div>
+      <label class="sort">מיון
+        <select id="sort" aria-label="מיון מוצרים">
+          <option value="default">מומלצים</option>
+          <option value="new">האחרונים</option>
+          <option value="price-asc">מחיר: מהנמוך</option>
+          <option value="price-desc">מחיר: מהגבוה</option>
+          <option value="name">שם</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="banner" id="banner" hidden></div>
+
+    <div class="grid" id="grid" aria-live="polite" aria-busy="true"></div>
+
+    <div class="empty" id="empty" hidden>
+      <div class="empty-face">¯\_(ツ)_/¯</div>
+      <h3>לא נמצאו מוצרים</h3>
+      <p>נסו לחפש אחרת, או אפסו את המסננים.</p>
+      <button class="btn btn-acid" id="resetFilters">איפוס מסננים</button>
+    </div>
+  </section>
+
+  <!-- ===== TICKER 2 ===== -->
+  <div class="ticker alt" aria-hidden="true">
+    <div class="ticker-track rev">
+      <span>SPREADSHEET · SHEET · GOOGLE</span><i>✦</i><span>LIVE CATALOG</span><i>✦</i><span>DROPSHIP READY</span><i>✦</i><span>NO CODE · NO SHOP</span><i>✦</i>
+    </div>
+  </div>
+
+  <!-- ===== HOW ===== -->
+  <section class="how" id="how">
+    <div class="sec-head">
+      <span class="eyebrow reveal"><i class="dot"></i> שלושה צעדים</span>
+      <h2 class="reveal">איך <em>זה</em> עובד</h2>
+    </div>
+    <ol class="steps">
+      <li class="step reveal">
+        <span class="step-n">01</span>
+        <h3>ממלאים את הגיליון</h3>
+        <p>שורה אחת לכל מוצר: שם, קישור שיתופי, קישור תמונה, מחיר ותיאור. זהו.</p>
+      </li>
+      <li class="step reveal">
+        <span class="step-n">02</span>
+        <h3>האתר נטען אוטומטית</h3>
+        <p>הקטלוג קורא את הגיליון בזמן אמת, בונה כרטיסים, מחירים וקטגוריות.</p>
+      </li>
+      <li class="step reveal">
+        <span class="step-n">03</span>
+        <h3>הלקוח לוחץ וקונה</h3>
+        <p>ההזמנה נשלחת ישירות בוואטסאפ — בלי הרשמה, בלי תשלום באתר. פשוט בוחרים ושולחים.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===== REVIEWS ===== -->
+  <section class="reviews" id="reviews">
+    <div class="sec-head">
+      <span class="eyebrow reveal"><i class="dot"></i> מה אומרים</span>
+      <h2 class="reveal">חוות <em>דעת</em></h2>
+    </div>
+    <div class="rev-row">
+      <div class="rev-track" id="revTrack"></div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq" id="faq">
+    <div class="sec-head">
+      <span class="eyebrow reveal"><i class="dot"></i> שאלות</span>
+      <h2 class="reveal">שאלות <em>תדירות</em></h2>
+    </div>
+    <div class="acc" id="acc">
+      <details class="acc-item reveal">
+        <summary>איך מוסיפים מוצר?<span class="acc-ico">+</span></summary>
+        <div class="acc-body"><p>פותחים את הגיליון, מוסיפים שורה חדשה עם השם, הלינק השיתופי והתמונה — ואז לוחצים "רענון" באתר. המוצר מופיע מיד.</p></div>
+      </details>
+      <details class="acc-item reveal">
+        <summary>מאיפה נשלחת ההזמנה?<span class="acc-ico">+</span></summary>
+        <div class="acc-body"><p>מהסל נשלחת הודעה מסודרת לוואטסאפ שלכן עם שמות המוצרים, המחירים והלינקים. אפשר גם לפתוח כל מוצר ישירות בלינק השיתופי שלו.</p></div>
+      </details>
+      <details class="acc-item reveal">
+        <summary>צריך сервер או חשבון בתשלום?<span class="acc-ico">+</span></summary>
+        <div class="acc-body"><p>לא. זה אתר סטטי שקורא את הגיליון בדפדפן. אפשר להעלות אותו ל-GitHub Pages, Netlify, Vercel או סתם לפתוח מקומית.</p></div>
+      </details>
+      <details class="acc-item reveal">
+        <summary>האם המחירים מתעדכנים אוטומטית?<span class="acc-ico">+</span></summary>
+        <div class="acc-body"><p>כן. כל רענון (ידני או אוטומטי כל כמה דקות) קורא מחדש את הגיליון — מחיר, תמונה או לינק ששיניתם יופיעו מיד.</p></div>
+      </details>
+      <details class="acc-item reveal">
+        <summary>מה עושים אם תמונה לא נטענת?<span class="acc-ico">+</span></summary>
+        <div class="acc-body"><p>אפשר לשים כל לינק תמונה ישירות (alicdn, imgur, Google Drive). אם הלינק חסום לחיצה חיצונית — תופיע תמונת-placeholder צבעונית, והמוצר ימשיך לעבוד.</p></div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta reveal">
+    <div class="cta-box">
+      <h2>מוכנים?<br>הקטלוג <em>ממתין</em>.</h2>
+      <p>שורה אחת בגיליון מפרידה ביניכם ממוצר חדש באתר.</p>
+      <div class="cta-row">
+        <a class="btn btn-dark" href="#products" data-magnet>לקטלוג ↑</a>
+        <button class="btn btn-outline-dark" id="shareSite" data-magnet>שיתוף האתר</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer id="contact">
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <span class="brand-mark">ע</span>
+      <b id="footName">עלי אקספרס</b>
+      <p id="footTag">קטלוג חי, מחירים מטורפים, קנייה בלחיצה</p>
+    </div>
+    <div class="foot-col">
+      <h4>ניווט</h4>
+      <a href="#products">מוצרים</a><a href="#how">איך זה עובד</a><a href="#faq">שאלות</a>
+    </div>
+    <div class="foot-col">
+      <h4>הקטלוג</h4>
+      <button class="linklike" id="refreshBtn2">רענון ידני של הקטלוג</button>
+      <span class="foot-meta" id="lastUpdate">—</span>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© <span id="year"></span> <b id="footName2">עלי אקספרס</b> · נבנה עם Google Sheets</span>
+    <span class="foot-note">מחירים וזמינות כפופים לעדכון בגיליון</span>
+  </div>
+</footer>
+
+<!-- ===== OVERLAY / DRAWER / MODAL ===== -->
+<div class="overlay" id="overlay" hidden></div>
+
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="סל קניות" hidden>
+  <header class="drawer-head">
+    <h3>הסל שלי <span id="drawerCount">(0)</span></h3>
+    <button class="icon-btn" id="closeDrawer" aria-label="סגירת סל">✕</button>
+  </header>
+  <div class="drawer-body" id="drawerBody"></div>
+  <footer class="drawer-foot">
+    <div class="total-row"><span>סה"כ</span><b id="cartTotal">₪0</b></div>
+    <button class="btn btn-acid w100" id="checkoutBtn">הזמנה בוואטסאפ <span aria-hidden="true">↗</span></button>
+    <p class="tiny">ההזמנה נשלחת עם שמות, מחירים ולינקים של כל מוצר.</p>
+  </footer>
+</aside>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="פרטי מוצר" hidden>
+  <div class="modal-card">
+    <button class="icon-btn modal-close" id="closeModal" aria-label="סגירה">✕</button>
+    <div class="modal-media"><img id="mImg" alt=""><span class="modal-badge" id="mBadge" hidden></span></div>
+    <div class="modal-body">
+      <span class="cat" id="mCat"></span>
+      <h3 id="mName"></h3>
+      <div class="price-row" id="mPriceRow"></div>
+      <p class="modal-desc" id="mDesc"></p>
+      <div class="modal-actions">
+        <a class="btn btn-acid" id="mBuy" href="#" target="_blank" rel="noopener">הזמנה בוואטסאפ <span aria-hidden="true">💬</span></a>
+        <button class="btn btn-ghost" id="mAdd">הוספה לסל</button>
+        <button class="icon-btn" id="mShare" aria-label="שיתוף מוצר">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 15V3m0 0L8 7m4-4 4 4"/></svg>
+        </button>
+      </div>
+      <div class="modal-thumbs" id="mThumbs"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<button class="to-top" id="toTop" aria-label="חזרה למעלה">↑</button>
+
+<a class="wa-fab" id="waFab" href="#" target="_blank" rel="noopener" aria-label="וואטסאפ" hidden>
+  <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12.04 2C6.6 2 2.2 6.4 2.2 11.84c0 1.74.46 3.44 1.32 4.94L2 22l5.36-1.4a9.8 9.8 0 0 0 4.68 1.2h.01c5.43 0 9.84-4.4 9.84-9.84C21.89 6.4 17.47 2 12.04 2Zm0 17.96h-.01a8.2 8.2 0 0 1-4.16-1.14l-.3-.18-3.1.81.83-3.02-.2-.31a8.13 8.13 0 0 1-1.25-4.28c0-4.5 3.67-8.16 8.19-8.16a8.15 8.15 0 0 1 8.17 8.17c0 4.5-3.67 8.11-8.17 8.11Zm4.5-6.07c-.25-.12-1.46-.72-1.68-.8-.23-.08-.39-.12-.56.12-.16.25-.63.8-.78.96-.14.17-.29.19-.53.07-.25-.13-1.04-.39-1.98-1.23-.73-.65-1.22-1.46-1.37-1.7-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.41-.56-.42h-.47c-.16 0-.43.06-.65.31-.23.25-.86.84-.86 2.05s.88 2.38 1 2.54c.13.17 1.73 2.64 4.2 3.7.59.25 1.04.4 1.4.52.59.18 1.12.16 1.55.1.47-.07 1.46-.6 1.66-1.17.21-.58.21-1.07.15-1.17-.06-.11-.23-.17-.48-.29Z"/></svg>
+</a>
+
+<noscript><div class="noscript">האתר זקוק ל-JavaScript כדי לקרוא את הקטלוג מהגיליון.</div></noscript>
+
+<script src="js/config.js"></script>
+<script src="js/sheet.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
